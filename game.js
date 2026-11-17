@@ -141,19 +141,17 @@ const CABINET_KEYS = {
     key: 'M',
     create() {
       const s = this; flush(); s.par = scenery(s, MIS[0]);
-      s.add.rectangle(400, 300, W, H, INK, 0.45);
-      tx(s, 400, 110, 'WELCOMBATE', 84, TY).J(TI, 12);
-      tx(s, 400, 172, 'los chefs de welcome back recuperan La Vega', 17);
-      s.m = tx(s, 400, 240, '', 24, TW); s.md = tx(s, 400, 285, '', 16, TY);
-      s.c1 = im(s, 320, 460, ('ch_idle')).K(2.2).O(0.5, 1);
-      s.c2 = s.add.image(480, 460, 'a2', ('ch_idle')).K(2.2).O(0.5, 1).X(true);
-      tx(s, 400, 500, '↑ ↓ jugadores · ← → modo · START: jugar', 16);
-      tx(s, 400, 532, HLP, 13);
-      s.draw = () => { s.m.T(G.two ? '2 JUGADORES · COOPERATIVO' : '1 JUGADOR'); s.md.T(G.prac ? '◀ PRÁCTICA: todas las misiones, sin ranking ▶' : '◀ ARCADE: tu puntaje entra al ranking ▶'); s.c2.V(!!G.two); };
+      s.add.rectangle(400, 300, W, H, INK, 0.3);
+      tx(s, 400, 120, 'WELCOMBATE', 96, TY).J(TI, 14);
+      s.m = tx(s, 400, 230, '', 22, TW); s.md = tx(s, 400, 268, '', 22, TY);
+      s.c1 = im(s, 330, 520, 'ch_idle').K(3).O(0.5, 1);
+      s.c2 = s.add.image(470, 520, 'a2', 'ch_idle').K(3).O(0.5, 1).X(true);
+      s.st = tx(s, 400, 566, 'START', 30, TW);
+      s.draw = () => { s.m.T(G.two ? '▲ 2 JUGADORES ▼' : '▲ 1 JUGADOR ▼'); s.md.T(G.prac ? '◀ PRÁCTICA ▶' : '◀ ARCADE ▶'); s.c2.V(!!G.two); };
       s.draw();
     },
     update(t, dt) {
-      const s = this; s.par(t * 0.08);
+      const s = this; s.par(t * 0.08); s.st.V(t % 800 < 520);
       s.c1.R(('ch_run' + (1 + (t / 110 | 0) % 4))); s.c2.R(('ch_run' + (1 + (t / 110 + 2 | 0) % 4)));
       if (h2('U') | h2('D')) { G.two ^= 1; tone(520, 0.05); s.draw(); }
       if (h2('L') | h2('R')) { G.prac ^= 1; tone(660, 0.05); s.draw(); }
@@ -171,20 +169,20 @@ const CABINET_KEYS = {
       cr: [[640, 1], [700, 1], [700, 2], [1500, 1], [2150, 1], [2210, 1], [2210, 2], [3000, 1], [3640, 1], [3700, 1], [4500, 1], [4560, 2]],
       rf: [[1180, 390], [2420, 390], [2600, 330], [3320, 390], [4180, 390]], ki: [1900, 3560],
       ho: [[1260, 390, 'c_tokan', '¡Pa\' que se coma un choripán!'], [2850, GY, 'c_tio', '¡Lo de siempre, cabros!'], [3400, 390, 'c_tio', '¡Con harta palta!']],
-      b: ['LA GRAN CAJA', 'boss1', 2.4, 0], t: 'Los robots de El Crítico tomaron La Vega.\nOjo con los quiltros ladrones: te roban\nlucas. Revientalos para recuperarlas.' },
+      b: ['LA GRAN CAJA', 'boss1', 2.4, 0], t: 'Se tomaron La Vega.\nSuelta a los caseros y ojo con los quiltros,\nque te roban las lucas.' },
     { c: 'TALCA', n: 'LA CATEDRAL', L: 800, sky: [BL, CE, PA, KR], mid: ['bg_plaza'], z: ['LA CATEDRAL'],
       wv: [[60, 'j', 0], [330, 'jd', 0], [660, 'j', 0], [990, 'jj', 0], [1320, 'jd', 0], [1650, 'jj', 0]],
       cr: [], rf: [], ki: [700],
       ho: [[400, GY - 660, 'c_tokan', '¡Al tiro!'], [300, GY - 1320, 'c_tio', '¡Lo de siempre, cabros!']],
-      b: ['QUILTRO MECÁNICO', 'quiltro', 4, 0x9a9a9a], t: 'Sube la torre de la catedral por vigas\ny escaleras (↑). Caen barriles de palta:\nsáltalos o revientalos. Arriba, el Quiltro.' },
+      b: ['QUILTRO MECÁNICO', 'quiltro', 4, 0x9a9a9a], t: 'El Quiltro está arriba de la torre.\nSe sube por las escaleras (↑) y van cayendo\nbarriles de palta: salta o dispara.' },
     { c: 'CHILLÁN', n: 'RUTA 5 SUR', L: 12000, sky: [CE, PA, YE, CO], mid: ['bg_ruta', 'bg_ruta', 'bg_ruta', 'bg_plaza', 'bg_ruta', 'bg_ruta', 'bg_puente', 'bg_ruta'], z: ['RUTA 5 SUR'],
       wv: [[300, 'vr', 0], [1100, 'cc', 0], [1800, 'vd', 0], [2600, 'rcv', 0], [3400, 'vv', 0], [4200, 'ccr', 0], [5000, 'vdv', 0], [5800, 'rrc', 0], [6600, 'vvd', 0], [7300, 'cvrv', 0], [8100, 'rvd', 0], [8900, 'ccvv', 0], [9700, 'vrvd', 0], [10500, 'cvvr', 0]],
       cr: [], rf: [], ki: [], ho: [],
-      b: ['CHANCHO BLINDADO', 'chancho', 5, 0xb0b0b0], t: '¡Carrera por la Ruta 5! El truck no frena:\n→ acelera, ← frena y apunta atrás. Revienta\nlos furgones de El Crítico y salta barriles.' },
+      b: ['CHANCHO BLINDADO', 'chancho', 5, 0xb0b0b0], t: 'Al truck se le cortaron los frenos.\n→ acelera, ← aguanta y dispara pa atrás.\nCuidado con los furgones y los barriles.' },
     { c: 'FONDA', n: 'TIRO AL BLANCO', L: 800, sky: [BLK, BD, P2C, TE], night: 1, mid: ['bg_fonda'], z: ['FONDA LA WELCOME'],
       wv: [[60, 'bb', 0], [90, 'bkp', 0], [120, 'bbb', 0], [150, 'bkkd', 0], [180, 'bbbp', 0], [210, 'bbkkd', 0], [240, 'bbbbkp', 0]],
       cr: [[370, 1]], rf: [], ki: [700], ho: [],
-      b: ['EL CRÍTICO', 'boss1', 2.4, 0xc9a0ff], t: 'Tiro al blanco en la fonda: el joystick\nmueve la MIRA, B1 dispara y B2 salta para\nesquivar. No le dispares a la pareja de cueca.' },
+      b: ['EL CRÍTICO', 'boss1', 2.4, 0xc9a0ff], t: 'Última parada: la fonda.\nEl joystick mueve la mira, B1 dispara y\nB2 salta. A la pareja de cueca, no.' },
   ];
   // Armas: S salsa (base) · M mayo (metralleta) · P pebre (escopeta) · F merkén (lanzallamas)
   const WP = { S: { n: 'SALSA', cd: 0.16, v: 760, t: 'pb' }, M: { n: 'MAYO', cd: 0.07, v: 800, t: 'mb', sp: 0.16, a: 150 },
@@ -244,7 +242,7 @@ const CABINET_KEYS = {
         cT = s.add.text(400, 186, 'MISIÓN ' + (G.m + 1) + ' · ' + M.c + ' · ' + M.n, ts(22)).O(0.5),
         cB = s.add.text(400, 258, M.t, ts(14, TI, { align: 'center', lineSpacing: 6 })).O(0.5),
         s.add.text(400, 340, HLP, ts(12, '#6e6a5e')).O(0.5),
-        cF = s.add.text(400, 400, 'START: ¡a la carga!', ts(20)).O(0.5)]);
+        cF = s.add.text(400, 400, 'START: vamos', ts(20)).O(0.5)]);
       // panel del kiosko
       const sp = s.add.container(0, 0).Z(0).D(3000).V(false);
       const spT = s.add.text(232, 196, '', ts(16, TI, { lineSpacing: 10 }));
@@ -383,7 +381,7 @@ const CABINET_KEYS = {
             const gx = p.x + (up ? 8 * p.face : dn ? 4 * p.face : 44 * p.face), gy = p.y - (up ? 118 : dn ? 10 : cr ? 30 : 66), vt = up ? -1 : dn ? 1 : 0;
             if (G.m === 3) {  // disparo a la mira
               const R = p.w === 'P' ? 60 : 30, d = wp.d || 1; part(p.cx, p.cy, 0, -80, 0.2, YE, 3, 4);
-              E.e((e) => { if (ab(e.x - p.cx) < R && ab((e.bot ? e.y - 35 : e.k === 'p' ? e.y - 44 : e.y) - p.cy) < R + 10) { if (e.k === 'p') { G.score[p.i] = mx(0, G.score[p.i] - 100); shout('¡OJO CON LA PAREJA DE CUECA! -100', TC, 700); } else { e.hp -= d; e.hitT = 0.05; e.by = p.i; } } });
+              E.e((e) => { if (ab(e.x - p.cx) < R && ab((e.bot ? e.y - 35 : e.k === 'p' ? e.y - 44 : e.y) - p.cy) < R + 10) { if (e.k === 'p') { G.score[p.i] = mx(0, G.score[p.i] - 100); shout('¡A LA CUECA NO! -100', TC, 700); } else { e.hp -= d; e.hitT = 0.05; e.by = p.i; } } });
               if (boss && boss.hp > 0 && ab(boss.x - p.cx) < 100 && p.cy > boss.y - boss.sp.displayHeight && p.cy < boss.y) { boss.hp -= d; boss.hitT = 0.05; }
             } else for (let n = 0; n < (wp.k || 1); n++) {
               const sd = wp.sp ? (rn() - 0.5) * wp.sp * 2 : 0, v = wp.v * (wp.k ? 0.85 + rn() * 0.3 : 1);
@@ -533,7 +531,7 @@ const CABINET_KEYS = {
               const ey = e.bot || e.k === 'p' ? e.y - 44 : 'crqv'.includes(e.k) ? e.y - 25 : e.y;
               if (ab(e.x - o.x) < 34 && ab(ey - o.y) < 44) {
                 if (e.sh && o.vx * e.face < 0 && ab(o.vy) < 200 && o.y > e.y - 70) { part(o.x, o.y, -o.vx * 0.3, -150, 0.3, CE, 3, 3); tone(1800, 0.03, 'square', 0.02); gone = 1; if ((e.shp -= o.d) <= 0) { boom(e.sh.x, e.y - 30, 0.7); e.sh.B(); e.sh = 0; } break; }  // rebota en el escudo y lo va rompiendo
-                if (e.k === 'p') { G.score[o.own] = mx(0, G.score[o.own] - 100); shout('¡OJO CON LA PAREJA DE CUECA! -100', TC, 700); gone = 1; break; }
+                if (e.k === 'p') { G.score[o.own] = mx(0, G.score[o.own] - 100); shout('¡A LA CUECA NO! -100', TC, 700); gone = 1; break; }
                 e.hp -= o.d; e.hitT = 0.05; e.by = o.own; G.score[o.own] += 10; part(o.x, o.y, -o.vx * 0.2, -80, 0.2, WH, 2, 3);
                 if (o.pierce) o.hitL.push(e); else { gone = 1; break; }
               }
